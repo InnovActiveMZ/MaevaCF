@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+	<t t-extend="PaymentScreenPaymentLines" t-inherit="point_of_sale.PaymentScreenPaymentLines" t-inherit-mode="extension" owl="1">
+		<xpath expr="//t[@t-if='line.selected']/div[hasclass('paymentline')]/div[hasclass('payment-name')]" position="after">
+			<t t-if="line.payment_method.hide_pay_ref and env.pos.config.allow_payment_ref">
+				<div style="margin: 0px 10px;max-width: 34%;word-break: break-word;line-height: 1.5rem;vertical-align: middle;text-align: center;display: inline-table;    margin-top: 15px;">
+					<t t-if="line.transaction_reference">
+						<span t-esc="line.transaction_reference" /><br/>
+					</t>
+					<t t-if="line.value">
+						<span t-esc="line.value" /><br/>
+					</t>
+					<t t-if="line.bank_name">
+						<span t-esc="line.bank_name" /><br/>
+					</t>
+					<t t-if="line.data">
+						<span t-esc="line.data" /><br/>
+					</t>
+
+					<span  class="edit-button"
+						t-on-click="trigger('change-payment-ref', { cid: line.cid })"
+						aria-label="Edit" title="Edit">
+						<i style="margin-left: 7px;" class="fa fa-pencil-square-o" />
+					</span>
+
+					<!-- <span  class="edit-button"
+						t-on-click="trigger('change-payment-ref', { cid: line.cid })"
+						aria-label="Edit" title="Edit">
+						<i style="margin-left: 7px;" class="fa fa-pencil-square-o" />
+					</span> -->
+				</div>
+			</t>
+		</xpath>
+		<xpath expr="//t[@t-else='']/div[hasclass('paymentline')]/div[hasclass('payment-name')]" position="after">
+			<t t-if="line.payment_method.hide_pay_ref and env.pos.config.allow_payment_ref">
+				<div style="margin: 0px 10px;max-width: 34%;word-break: break-word;line-height: 1.5rem;vertical-align: middle;text-align: center;display: inline-table;    margin-top: 15px;">
+					<t t-if="line.transaction_reference">
+						<span t-esc="line.transaction_reference" /><br/>
+					</t>
+					<t t-if="line.value">
+						<span t-esc="line.value" /><br/>
+					</t>
+					<t t-if="line.bank_name">
+						<span t-esc="line.bank_name" /><br/>
+					</t>
+					<t t-if="line.data">
+						<span t-esc="line.data" /><br/>
+					</t>
+					<span  class="edit-button"
+						t-on-click="trigger('change-payment-ref', { cid: line.cid })"
+						aria-label="Edit" title="Edit">
+						<i style="margin-left: 7px;" class="fa fa-pencil-square-o" />
+					</span>
+				</div>
+			</t>
+		</xpath>
+	</t>
+
+
+
+	<t t-name="PaymentRefData" owl="1">
+        <div role="dialog" class="modal-dialog">
+            <div class="popup popup-textinput">
+                <header class="title">
+                    <t t-esc="props.title" />
+                </header>
+                <div class="div">
+                    <p>
+                        <t t-esc="props.body" />
+                    </p>
+                    <span>Payment Ref: </span> <input type="text" style="width:320px" t-model="state.inputRef" t-ref="inputRef" />
+                    <br/>
+                    <br/>
+                    <span>Payment Value: </span><input type="text" style="width:320px" t-model="state.inputValue" t-ref="inputValue" />
+                    <br/>
+                    <br/>
+                    <span>Bank Name: </span><input type="text" style="width:320px" t-model="state.inputBank" t-ref="inputBank" />
+                    <br/>
+                    <br/>
+                    <span>Data: </span><input type="text" style="width:320px" t-model="state.inputData" t-ref="inputData" />
+                </div>
+                <div class="footer">
+                    <div class="button confirm" t-on-click="confirm">
+                        <t t-esc="props.confirmText" />
+                    </div>
+                    <div class="button cancel" t-on-click="cancel">
+                        <t t-esc="props.cancelText" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </t>
+</templates>
